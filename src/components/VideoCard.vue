@@ -1,21 +1,19 @@
 <template>
-  <div class="group card bg-base-100 shadow-md hover:shadow-2xl transition-all duration-300 w-72 cursor-pointer">
+  <div class="group card bg-base-100 shadow-md hover:shadow-2xl transition-all duration-300 cursor-pointer">
 
     <!-- Thumbnail -->
     <figure class="relative overflow-hidden">
-
       <img
         :src="thumbnailUrl"
         class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-105"
       />
 
       <!-- Play icon overlay -->
-      <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-        <div class="bg-black/50 rounded-full p-3">
+      <div @click.stop="openDialogVideo" class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
+        <div class="bg-black/50 rounded-full p-3 text-white text-xl">
           ▶
         </div>
       </div>
-
     </figure>
 
     <!-- Content -->
@@ -33,28 +31,50 @@
       <div class="card-actions justify-end mt-2">
         <button
           class="btn btn-primary btn-xs"
-          @click="openVideo"
+          @click.stop="openVideo"
         >
-          Open
+          Aç
         </button>
       </div>
 
     </div>
 
+    <!-- Video Dialog -->
+    <VideoDialog
+      ref="videoDialog"
+      :src="videoSrc"
+      :title="video.name"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { Video } from "@/types/video.types"
+import { useRouter } from "vue-router"
+import { ref } from "vue"
+import VideoDialog from "./VideoDialog.vue"
+import { usevideoStore } from '@/stores/video.store';
+const props = defineProps<{ video: Video }>()
+const videostore = usevideoStore();
+const router = useRouter()
+const videoDialog = ref<InstanceType<typeof VideoDialog> | null>(null)
 
-const props = defineProps<{
-  video: Video
-}>()
+// Thumbnail URL
+const thumbnailUrl = `${import.meta.env.VITE_API_URL}/Videos/thumbnail/${props.video.id}/${props.video.name}/thumbnail.jpg`
 
-const thumbnailUrl =
-  `https://localhost:44315/api/Videos/thumbnail/${props.video.id}/${props.video.name}/thumbnail.jpg`
+// Video URL (Dialog için)
+const videoSrc = `${import.meta.env.VITE_API_URL}/Videos/stream/${props.video.id}/${props.video.name}/index.m3u8`
 
-const openVideo = () => {
-  console.log("Video opened:", props.video.id)
+// Router ile detay sayfasına git
+function openVideo() {
+videostore.setCurrentVideo(props.video) // Store'a seçilen videoyu kaydet
+  router.push(`/videodetail/${props.video.id}`)
+}
+
+// Dialog aç
+function openDialogVideo() {
+  if (videoDialog.value) {
+    videoDialog.value.open()
+  }
 }
 </script>

@@ -19,7 +19,7 @@ function handleUpload(e: Event) {
   if (!input.files?.length) return;
   const file = input.files[0];
   if (!file) return;
-  videostore.uploadFile(file);
+  videostore.uploadVideo(file);
 }
 
 // Video initialization

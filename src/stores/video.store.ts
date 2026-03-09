@@ -6,13 +6,14 @@ export const usevideoStore = defineStore("videoStore", {
   state: () => ({
     videos: [] as Video[],
     lastvideo: null as Video | null,
+    currentvideo: null as Video | null,
     process: false,
     progress: 0,
     currentstoredFileId: null as string | null,
 
   }),
   actions: {
-    async uploadFile(file: File) {
+    async uploadVideo(file: File) {
       try {
         this.process = true
         this.progress = 0
@@ -37,8 +38,9 @@ export const usevideoStore = defineStore("videoStore", {
         }
 
         // 3️⃣ COMPLETE
-     const  lastvideo =  await fileService.complete(storedFileId)
-      this.lastvideo = lastvideo
+        const lastvideo = await fileService.complete(storedFileId)
+        this.currentvideo = lastvideo
+        this.lastvideo = lastvideo
 
       } finally {
         this.process = false
@@ -59,5 +61,9 @@ export const usevideoStore = defineStore("videoStore", {
         this.process = false
       }
     },
-  },
+    setCurrentVideo(video: Video) {
+      this.currentvideo = video
+    },
+   
+  }
 })

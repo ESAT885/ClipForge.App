@@ -2,45 +2,40 @@
 import {  onMounted } from "vue"
 import { usevideoStore } from '@/stores/video.store';
 import VideoCard from '@/components/VideoCard.vue';
-
+import { useRouter } from "vue-router";
+const router = useRouter()
 const videostore = usevideoStore();
 onMounted(() => {
   videostore.fetchVideos()
 })
+function addNewVideo() {
+  router.push(`/videodetail`)
+}
 </script>
 <template>
-
-  <div class="p-6 space-y-6">
+  <div class="p-4 sm:p-6 space-y-6">
 
     <!-- Header -->
-    <div class="flex items-center justify-between">
-
-      <h1 class="text-2xl font-bold">
-        Videos
-      </h1>
+    <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <h1 class="text-2xl font-bold">Videolar</h1>
 
       <button
-        class="btn btn-primary"
-        @click="null"
+        class="btn btn-primary w-full sm:w-auto"
+        @click="addNewVideo"
       >
-        + New Video
+        + Yeni Video
       </button>
-
     </div>
-
 
     <!-- Video Grid -->
     <div
       v-if="videostore.videos.length"
-      class="
-        grid
-        gap-6
-        grid-cols-1
-        sm:grid-cols-2
-        md:grid-cols-3
-        lg:grid-cols-4
-        xl:grid-cols-5
-      "
+      class="grid gap-4 sm:gap-6
+             grid-cols-1
+             xs:grid-cols-2
+             md:grid-cols-3
+             lg:grid-cols-4
+             xl:grid-cols-5"
     >
       <VideoCard
         v-for="v in videostore.videos"
@@ -49,19 +44,18 @@ onMounted(() => {
       />
     </div>
 
-
     <!-- Empty State -->
     <div
       v-else
-      class="flex flex-col items-center justify-center py-20 opacity-60"
+      class="flex flex-col items-center justify-center py-12 sm:py-20 opacity-60 text-center px-4"
     >
-      <p>No videos yet</p>
+      <p class="text-sm sm:text-base">Henüz video yok</p>
 
       <button
-        class="btn btn-primary mt-4"
+        class="btn btn-primary mt-4 w-full sm:w-auto"
         @click="null"
       >
-        Upload First Video
+        İlk Videoyu Yükle
       </button>
     </div>
 
