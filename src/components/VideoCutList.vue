@@ -62,7 +62,7 @@ function progressLeft(cut: CutVideo) {
 
           <div class="flex items-center gap-2">
             <span class="text-[10px] text-neutral-content/40 font-mono w-7 text-right">{{ formatTime(cut.startSecond)
-              }}</span>
+            }}</span>
             <div class="relative flex-1 h-1 bg-neutral-content/10 rounded-full overflow-hidden">
               <div
                 class="absolute top-0 h-full rounded-full bg-gradient-to-r from-success to-warning group-hover:from-primary group-hover:to-secondary transition-colors duration-300"
@@ -80,7 +80,7 @@ function progressLeft(cut: CutVideo) {
         <!-- Actions -->
         <div class="flex items-center gap-1 flex-shrink-0">
           <!-- GIF Button -->
-          <button class="btn btn-ghost btn-xs gap-1 rounded-lg hover:text-primary" title="GIF Al">
+          <button class="btn btn-ghost btn-xs gap-1 rounded-lg hover:text-primary" title="GIF Al"  @click="cutVideostore.downLoadCutVideoGif(cut.id ?? '')">
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
               <rect x="2" y="6" width="20" height="12" rx="2" />
               <path d="M8.5 12H7a1 1 0 100 0v-1.5" stroke-linecap="round" />
@@ -91,7 +91,8 @@ function progressLeft(cut: CutVideo) {
           </button>
 
           <!-- Download -->
-          <button class="btn btn-ghost btn-xs btn-square rounded-lg hover:text-success" title="İndir" @click="cutVideostore.downLoadCutVideo(cut.id??'')">
+          <button class="btn btn-ghost btn-xs btn-square rounded-lg hover:text-success" title="İndir"
+            @click="cutVideostore.downLoadCutVideo(cut.id ?? '')">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -99,7 +100,8 @@ function progressLeft(cut: CutVideo) {
           </button>
 
           <!-- Delete -->
-          <button v-if="cut.id" class="btn btn-ghost btn-xs btn-square rounded-lg hover:text-error" title="Sil" @click="cutVideostore.deleteCutVideo(cut.id??'')">
+          <button v-if="cut.id" class="btn btn-ghost btn-xs btn-square rounded-lg hover:text-error" title="Sil"
+            @click="cutVideostore.deleteCutVideo(cut.id ?? '')">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.8">
               <path stroke-linecap="round" stroke-linejoin="round"
                 d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />

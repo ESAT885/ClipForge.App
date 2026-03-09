@@ -12,6 +12,7 @@ const videoId = route.params.id as string
 const videostore = usevideoStore();
 const cutVideostore = usecutVideoStore()
 const videoRef = ref<HTMLVideoElement | null>(null);
+
 // Sprite sheet
 const spriteFrames = ref<string[]>([]);
 const startIndex = ref<number | null>(null)
@@ -144,9 +145,9 @@ const formatTime = (time: number) => {
 };
 
 onMounted(() => {
-  if(videoId) {
+  if (videoId) {
     cutVideostore.videoId = videoId as string
-cutVideostore.fetchCutVideos()
+    cutVideostore.fetchCutVideos()
   }
   if (hls) {
     hls.destroy();
@@ -250,6 +251,7 @@ const cutVideo = async () => {
     alert("Video kesilirken bir hata oluştu.")
   }
 }
+
 </script>
 
 <template>
@@ -322,4 +324,5 @@ const cutVideo = async () => {
 
     <div v-else class="text-gray-500">Yüklenecek video seçilmedi.</div>
   </div>
+ 
 </template>

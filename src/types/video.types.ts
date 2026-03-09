@@ -4,4 +4,5 @@ export interface Video {
   frameCount: number;
   width: number
   height: number
+  status:string
 }

@@ -3,10 +3,14 @@
 
     <!-- Thumbnail -->
     <figure class="relative overflow-hidden">
-      <img
+      <div class="relative w-full h-40">
+          <img
+            v-if="video.status=='Complete'"
         :src="thumbnailUrl"
         class="w-full h-40 object-cover transition-transform duration-300 group-hover:scale-105"
       />
+      </div>
+
 
       <!-- Play icon overlay -->
       <div @click.stop="openDialogVideo" class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">

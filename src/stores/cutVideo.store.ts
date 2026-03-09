@@ -59,6 +59,21 @@ export const usecutVideoStore = defineStore("cutVideoStore", {
       } finally {
         this.process = false
       }
+    },
+     async downLoadCutVideoGif(cutVideoId: string) {
+      try {
+
+        this.process = true
+
+        const res = await cutVideoService.downloadCutVideoGif(cutVideoId)
+
+          window.location.href = res
+
+      } catch (err) {
+        console.error(err)
+      } finally {
+        this.process = false
+      }
     }
   }
 })
