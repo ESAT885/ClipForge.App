@@ -1,4 +1,9 @@
-# ClipForge - Video Kesme ve Düzenleme Uygulaması
+<table align="center">
+  <tr>
+    <td><img src="images/logo.png" width="32" height="32"/></td>
+    <td><h1>ClipForge - Video Kesme ve Düzenleme Uygulaması</h1></td>
+  </tr>
+</table>
 
 ![Edit Video](images/editVideo2.png)
 
