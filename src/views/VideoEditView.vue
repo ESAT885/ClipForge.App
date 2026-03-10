@@ -5,9 +5,10 @@ import { ref, onMounted, computed } from 'vue';
 import { usecutVideoStore } from '@/stores/cutVideo.store';
 import VideoCutList from '@/components/VideoCutList.vue';
 import { useRoute } from "vue-router"
+import VideoEditControlButtons from '@/components/VideoEditControlButtons.vue';
+import VideoEditHeader from '@/components/VideoEditHeader.vue';
 
 const route = useRoute()
-
 const videoId = route.params.id as string
 const videostore = usevideoStore();
 const cutVideostore = usecutVideoStore()
@@ -237,13 +238,14 @@ const cutVideo = async () => {
   const duration = videoRef.value?.duration || 0
   const startSecond = (startIndex.value / totalFrames) * duration
   const endSecond = (endIndex.value / totalFrames) * duration
+  console.log("Kesilecek aralık:", startSecond, "saniye -", endSecond, "saniye")
 
   try {
     await cutVideostore.cutVideo({
       videoId: videostore.currentvideo.id,
       fileName: "Cut_1",
-      startSecond: startSecond,
-      endSecond: endSecond
+      startSecond: Math.round(startSecond),
+      endSecond: Math.round(endSecond)
     })
     alert("Video başarıyla kesildi!")
   } catch (err) {
@@ -255,11 +257,11 @@ const cutVideo = async () => {
 </script>
 
 <template>
+  <VideoEditHeader></VideoEditHeader>
   <div class="p-6 space-y-6">
-    <h1 class="text-2xl font-bold">Video Düzenleme</h1>
+
     <div v-if="videostore.currentvideo" class="space-y-4">
-      <h2 class="text-lg font-semibold">{{ videostore.currentvideo.name }} {{ videostore.currentvideo.width }}x{{
-        videostore.currentvideo.height }}</h2>
+
 
       <!-- Video Player -->
       <div class="flex justify-center">
@@ -269,32 +271,15 @@ const cutVideo = async () => {
           <video ref="videoRef" playsinline class="w-full h-full object-contain" @timeupdate="updateTime"
             @loadedmetadata="setDuration"></video>
 
-          <!-- Overlay Controls -->
-          <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between bg-black/50 p-2 rounded-md">
-            <div class="flex gap-2 mb-2">
-              <button @click="toggle" class="px-4 py-1.5 rounded-lg bg-black text-white text-sm font-medium
-         hover:bg-gray-800 active:scale-95
-         transition-all duration-200 shadow-md">
-                {{ isPlaying ? '⏸' : '▶' }}
-              </button>
-              <button @click="playSelection" :disabled="startIndex === null || endIndex === null" class="px-4 py-1.5 rounded-lg  bg-black text-white text-sm font-medium
-           hover:bg-green-700 active:scale-95
-           disabled:opacity-40 disabled:cursor-not-allowed
-           transition-all duration-200 shadow-md">
-                ▶ Seçili Kısmı Oynat
-              </button>
-              <button :disabled="startIndex === null || endIndex === null" @click="clearSelection" class="px-4 py-1.5 rounded-lg bg-gray-700 text-white text-sm
-  hover:bg-gray-800 transition-all">
-                ✖ Seçimi Temizle
-              </button>
-              <button @click="cutVideo" class="px-4 py-1.5 rounded-lg bg-gray-700 text-white text-sm
-  hover:bg-gray-800 transition-all">
-                Seçilen Aralık: {{ startIndex !== null && endIndex !== null ? `${startIndex} - ${endIndex}` : 'Yok' }}
-              </button>
-            </div>
 
-            <span class="text-white text-sm">{{ formatTime(currentTime) }} / {{ formatTime(duration) }}</span>
-          </div>
+          <VideoEditControlButtons :isPlaying="isPlaying" :startIndex="startIndex" :endIndex="endIndex" @toggle="toggle"
+            @playSelection="playSelection" @clearSelection="clearSelection" @cutVideo="cutVideo">
+            <template #time>
+              <span class="text-white text-sm">
+                {{ formatTime(currentTime) }} / {{ formatTime(duration) }}
+              </span>
+            </template>
+          </VideoEditControlButtons>
         </div>
       </div>
 
@@ -324,5 +309,5 @@ const cutVideo = async () => {
 
     <div v-else class="text-gray-500">Yüklenecek video seçilmedi.</div>
   </div>
- 
+
 </template>

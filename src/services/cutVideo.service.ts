@@ -1,7 +1,8 @@
 import type { Video } from "@/types/video.types";
-import type { CutVideoRequest } from "@/types/CutVideoRequest.types";
+
 import api from "./axios";
 import type { CutVideo } from "@/types/cutVideo.types";
+import type { CutVideoRequest } from "@/types/CutVideoRequest.types";
 export const cutVideoService = {
   cutVideo(cutVideoRequest: CutVideoRequest): Promise<CutVideo> {
     return api.post("/CutVideos/cut", cutVideoRequest);

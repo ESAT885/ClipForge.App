@@ -10,7 +10,7 @@ export const usevideoStore = defineStore("videoStore", {
     process: false,
     progress: 0,
     currentstoredFileId: null as string | null,
-
+search: ""
   }),
   actions: {
     async uploadVideo(file: File) {
@@ -64,6 +64,6 @@ export const usevideoStore = defineStore("videoStore", {
     setCurrentVideo(video: Video) {
       this.currentvideo = video
     },
-   
+
   }
 })

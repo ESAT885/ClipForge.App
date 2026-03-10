@@ -1,4 +1,4 @@
-export interface CutVideo {
+export interface  CutVideo {
   id: string|null
   videoId: string
   startSecond: number

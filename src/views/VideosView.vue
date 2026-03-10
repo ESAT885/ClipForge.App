@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue"
+import { computed, onMounted, ref } from "vue"
 import { usevideoStore } from '@/stores/video.store';
 import VideoCard from '@/components/VideoCard.vue';
 
@@ -17,6 +17,11 @@ function openAddDialogVideo() {
     videoAddDialog.value.open()
   }
 }
+const filteredVideos = computed(() => {
+  return videostore.videos.filter(v =>
+    v.name.toLowerCase().includes(videostore.search.toLowerCase())
+  )
+})
 </script>
 <template>
   <div class="p-4 sm:p-6 space-y-6">
@@ -52,28 +57,28 @@ function openAddDialogVideo() {
 
     </div>
     <div class="flex gap-2 mb-4">
-      <input type="text" placeholder="Video ara..." class="input input-bordered w-full " />
-      <select class="select select-bordered">
+      <input type="text" v-model="videostore.search" placeholder="Video ara..." class="input input-bordered w-full " />
+      <!-- <select class="select select-bordered">
         <option>Tümü</option>
         <option>Tamamlandı</option>
         <option>İşleniyor</option>
-      </select>
+      </select> -->
     </div>
     <!-- Video Grid -->
-    <div v-if="videostore.videos.length" class="grid gap-4 sm:gap-6
+    <div v-if="filteredVideos.length" class="grid gap-4 sm:gap-6
              grid-cols-1
              xs:grid-cols-2
              md:grid-cols-3
              lg:grid-cols-4
              xl:grid-cols-5">
-      <VideoCard v-for="v in videostore.videos" :key="v.id" :video="v" />
+      <VideoCard v-for="v in filteredVideos" :key="v.id" :video="v" />
     </div>
 
     <!-- Empty State -->
     <div v-else class="flex flex-col items-center justify-center py-12 sm:py-20 opacity-60 text-center px-4">
       <p class="text-sm sm:text-base">Henüz video yok</p>
 
-      <button class="btn btn-primary mt-4 w-full sm:w-auto" @click="null">
+      <button class="btn btn-primary mt-4 w-full sm:w-auto"  @click="openAddDialogVideo">
         İlk Videoyu Yükle
       </button>
     </div>

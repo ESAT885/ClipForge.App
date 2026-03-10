@@ -8,11 +8,13 @@ export const usecutVideoStore = defineStore("cutVideoStore", {
     process: false,
     videoId: null as string | null,
     cutVideos: [] as CutVideo[],
+
   }),
   actions: {
     async cutVideo(cutVideoRequest: CutVideoRequest) {
       try {
         this.process = true
+        
         const res = await cutVideoService.cutVideo(cutVideoRequest)
 
         await this.fetchCutVideos()
