@@ -41,4 +41,5 @@ FFmpeg, video ve ses dosyaları üzerinde güçlü işlemler gerçekleştirebile
 ## Kurulum ve Kullanım
 1. Repoyu klonlayın:  
    ```bash
-   git clone https://github.com/kullaniciAdi/ClipForge.git
+   git clone (https://github.com/ESAT885/ClipForge.App.git)
+             
