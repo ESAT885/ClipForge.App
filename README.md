@@ -25,7 +25,7 @@ FFmpeg, video ve ses dosyaları üzerinde güçlü işlemler gerçekleştirebile
 - Video işlemleri sırasında **thumbnail oluşturma** ve arka plan görevlerini yönetmek,  
 - Kullanıcının başka işlemlerle uğraşmasını engellemeden arka planda işlemlerin tamamlanmasını sağlamak.
 
-![Sprite Preview](images/sprite.png)
+![Sprite Preview](images/sprite.jpg)
 
 ## Özellikler ve Teknik Detaylar
 - **Büyük dosya desteği:**  
