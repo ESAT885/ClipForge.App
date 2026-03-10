@@ -11,7 +11,7 @@ const videostore = usevideoStore();
 </script>
 <template>
     <div class="sticky top-0 z-20 bg-base-100 border-b border-base-300 shadow-sm">
-    <div class="max-w-7xl mx-auto px-6 py-3 flex items-center gap-4">
+    <div class="max-w-7xl  px-6 py-3 flex items-center gap-4">
 
       <!-- Back button -->
       <button @click="goBack" class="btn btn-ghost btn-sm flex items-center gap-2 text-3xl font-bold">
