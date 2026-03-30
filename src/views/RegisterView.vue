@@ -1,16 +1,30 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.store'
 
-const router = useRouter();
-const name = ref('');
-const email = ref('');
-const password = ref('');
+const router = useRouter()
+const authStore = useAuthStore()
 
-function handleRegister() {
-  console.log("Kayıt olunuyor:", name.value);
-  // Kayıt API işlemleri buraya
-  router.push('/login');
+const name = ref('')
+const email = ref('')
+const password = ref('')
+const errorMessage = ref('')
+
+async function handleRegister() {
+  try {
+    errorMessage.value = ''
+    await authStore.register({
+      userName: name.value,
+      email: email.value,
+      password: password.value
+    })
+    alert('Kayıt başarılı! Lütfen giriş yapın.')
+    router.push('/login')
+  } catch (err) {
+      console.error(err)
+    errorMessage.value = 'Kullanıcı adı veya şifre hatalı.'
+  }
 }
 </script>
 

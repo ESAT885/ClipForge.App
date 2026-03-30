@@ -1,15 +1,38 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.store'
 
-const router = useRouter();
-const email = ref('');
-const password = ref('');
+const router = useRouter()
+const authStore = useAuthStore()
 
-function handleLogin() {
-  console.log("Giriş yapılıyor:", email.value);
-  // Giriş işlemleri buraya (Auth store vb.)
-  router.push('/'); // Başarılıysa videolara yönlendir
+const userName = ref('')
+const password = ref('')
+const loading = ref(false)
+const errorMessage = ref('')
+
+async function handleLogin() {
+  try {
+    loading.value = true
+    errorMessage.value = ''
+
+    await authStore.login({
+      userName: userName.value,
+      password: password.value,
+    })
+
+    // 🔥 KRİTİK KONTROL
+    if (!authStore.accessToken) {
+      throw new Error('Token alınamadı')
+    }
+
+    await router.replace('/')
+  } catch (err) {
+    console.error(err)
+    errorMessage.value = 'Kullanıcı adı veya şifre hatalı.'
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 
@@ -29,12 +52,12 @@ function handleLogin() {
         <form @submit.prevent="handleLogin" class="space-y-4">
           <div class="form-control">
             <label class="label">
-              <span class="label-text font-semibold">E-posta</span>
+              <span class="label-text font-semibold">Kullanıcı Adı</span>
             </label>
             <input
-              v-model="email"
-              type="email"
-              placeholder="E-posta adresini gir"
+              v-model="userName"
+              type="text"
+              placeholder="Kullanıcı adını gir"
               class="input input-bordered focus:input-primary w-full transition-all"
               required
             />
