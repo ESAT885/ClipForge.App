@@ -1,4 +1,9 @@
-# ClipForge - Video Kesme ve Düzenleme Uygulaması
+<table align="center">
+  <tr>
+    <td><img src="images/logo.png" width="32" height="32"/></td>
+    <td><h1>ClipForge - Video Kesme ve Düzenleme Uygulaması</h1></td>
+  </tr>
+</table>
 
 ![Edit Video](images/editVideo2.png)
 
@@ -36,4 +41,5 @@ FFmpeg, video ve ses dosyaları üzerinde güçlü işlemler gerçekleştirebile
 ## Kurulum ve Kullanım
 1. Repoyu klonlayın:  
    ```bash
-   git clone https://github.com/kullaniciAdi/ClipForge.git
+   git clone (https://github.com/ESAT885/ClipForge.App.git)
+             
