@@ -23,7 +23,7 @@ const emit = defineEmits([
 
     <button
       @click="emit('toggle')"
-      class=" btn px-4 py-1.5 rounded-lg bg-black text-white text-sm"
+      class=" btn px-4 py-1.5 rounded-lg bg-gray-700 text-white text-sm"
     >
       {{ isPlaying ? '⏸' : '▶' }}
     </button>
@@ -31,7 +31,7 @@ const emit = defineEmits([
     <button
       @click="emit('playSelection')"
       :disabled="startIndex === null || endIndex === null"
-      class="btn px-4 py-1.5 rounded-lg bg-black text-white text-sm"
+      class="btn px-4 py-1.5 rounded-lg bg-gray-700 text-white text-sm"
     >
       ▶ Seçili Oynat
     </button>

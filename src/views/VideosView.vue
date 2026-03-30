@@ -4,9 +4,10 @@ import { usevideoStore } from '@/stores/video.store';
 import VideoCard from '@/components/VideoCard.vue';
 
 import VideoAddDialog from '@/components/VideoAddDialog.vue';
+import { useRouter } from "vue-router";
 const videoAddDialog = ref<InstanceType<typeof VideoAddDialog> | null>(null)
 
-
+const router = useRouter();
 const videostore = usevideoStore();
 onMounted(() => {
   videostore.fetchVideos()
@@ -22,6 +23,11 @@ const filteredVideos = computed(() => {
     v.name.toLowerCase().includes(videostore.search.toLowerCase())
   )
 })
+
+function goToBackgroundMonitor() {
+  // background monitor sayfasına yönlendirme
+  router.push('/background-monitor');
+}
 </script>
 <template>
   <div class="p-4 sm:p-6 space-y-6">
@@ -45,15 +51,28 @@ const filteredVideos = computed(() => {
         </div>
 
       </div>
+      <div class="flex gap-2">
+        <!-- Button -->
+        <button class="btn btn-primary shadow-lg rounded-full p-4" @click="openAddDialogVideo">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
 
-      <!-- Button -->
-      <button class="btn btn-primary shadow-lg rounded-full p-4" @click="openAddDialogVideo">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-        </svg>
+          Yeni Video
+        </button>
+        <button class="btn btn-primary shadow-lg rounded-full p-4 flex items-center gap-2"
+          @click="goToBackgroundMonitor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3zm0 10c-2.761 0-5-2.239-5-5h2a3 3 0 0 0 6 0h2c0 2.761-2.239 5-5 5z" />
+          </svg>
+          Arka Plan İşlemleri
+        </button>
 
-        Yeni Video
-      </button>
+
+
+      </div>
+
 
     </div>
     <div class="flex gap-2 mb-4">
@@ -78,7 +97,7 @@ const filteredVideos = computed(() => {
     <div v-else class="flex flex-col items-center justify-center py-12 sm:py-20 opacity-60 text-center px-4">
       <p class="text-sm sm:text-base">Henüz video yok</p>
 
-      <button class="btn btn-primary mt-4 w-full sm:w-auto"  @click="openAddDialogVideo">
+      <button class="btn btn-primary mt-4 w-full sm:w-auto" @click="openAddDialogVideo">
         İlk Videoyu Yükle
       </button>
     </div>
